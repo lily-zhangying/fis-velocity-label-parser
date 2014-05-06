@@ -1,0 +1,53 @@
+
+#html("home:static/lib/mod.js")
+        #head
+                <meta charset="utf-8"/>
+
+                #if($info.imgs) 
+                    <img src="$info.imgs" border=0> 
+                #else 
+                    <img src="noPhoto.jpg"> 
+                #end
+               
+        #end
+
+        #body
+                #require("home:static/index/index.css")
+                #widget("home:widget/A/A.tpl")
+
+                ## 通过script插件收集加载组件化JS代码
+
+                #script
+                        require.async("home:static/ui/B/B.js");
+                        __inline("./a.js");
+                        require('a.js');
+                        var gif = __uri('images/logo.gif');
+                        
+                        // @require.async ./index.js
+
+                        /*
+                         * @require.async ./index.js
+                         */
+                #end
+
+                #style
+                        @import url('./a.css');
+                        @import url('a.css?__inline');
+                        /**
+                         * @require a.css
+                         */                
+                #end
+
+                #if($msg) 
+                        <script> 
+                                alert('$!msg'); 
+                        </script> 
+                #end 
+
+                #foreach( $info in $hotList1) 
+                    <a href="/bbsdoc.ejf?easyJWebCommand=show&&cid=$!info.cid" target="_blank">$!info.title</a><br> 
+                #end 
+
+        #end
+
+#end
