@@ -1,0 +1,31 @@
+{
+  "name": "fis-velocity-label-parser",
+  "version": "0.0.0",
+  "description": "fis,fis-velocity-label-parser",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lily-zhangying/fis-velocity-label-parser.git"
+  },
+  "keywords": [
+    "fis",
+    "velocity-label-parser"
+  ],
+   "devDependencies": {
+    "chai": "*",
+    "mocha": "*",
+    "fis":"*"
+  },
+  "author": "lily-zhangying",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lily-zhangying/fis-velocity-label-parser/issues"
+  },
+  "homepage": "https://github.com/lily-zhangying/fis-velocity-label-parser"
+}

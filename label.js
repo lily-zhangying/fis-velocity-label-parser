@@ -1,1 +1,1 @@
-label.js
+var labels = {};
