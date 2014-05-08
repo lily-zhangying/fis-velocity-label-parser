@@ -25,7 +25,6 @@ module.exports = function(content){
         r.content = result[0];
         comment_array.push(r);
     }
-    // console.log(comment_array);
     for(var i = 0; i < content.length; i++){
         var char = content.toString().charAt(i);
         for(var j = 0; j < comment_array.length; j++){
