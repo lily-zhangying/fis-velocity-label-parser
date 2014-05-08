@@ -1,30 +1,23 @@
-// var labels = require('./label.js');
 var fis = require('fis');
 
-// var states = {
-//     'start_label',
-//     'read_label',
-//     'end_label',
-//     'read_content'
-// };
+var none_end_lables = ['#else', '#set', '#elseif', '#stop', '#include', '#parse', '#require', '#widget'];
 
-var none_end_lables = ['#else', '#set', '#elseif', '#stop', '#include', '#parse'];
-
-var current_state = 'read_content';
-var stack = [];
-var res = [];
 var END_LABEL = '#end';
 
-var current_label = {
-    start : null,
-    end : null,
-    content_array : [],
-    content_str : []
-};
+var label = function(){
+    this.start = null;
+    this.end = null;
+    this.content_array = [];
+    this.content_str = [];
+}
 
 module.exports = function(content){
     var reg = /(\#\#[^\r\n\f]+|\#\*[\s\S]+?(?:\*\#|$))/ig;
+    var current_state = 'read_content';
+    var stack = [];
+    var res = [];
     var comment_array = [];
+
     while((result = reg.exec(content)) !== null){
         var r = [];
         r.start = result.index;
@@ -32,7 +25,7 @@ module.exports = function(content){
         r.content = result[0];
         comment_array.push(r);
     }
-    console.log(comment_array);
+    // console.log(comment_array);
     for(var i = 0; i < content.length; i++){
         var char = content.toString().charAt(i);
         for(var j = 0; j < comment_array.length; j++){
@@ -41,39 +34,26 @@ module.exports = function(content){
                 break;
             }
         }
-        console.log("befor : " + current_state);
-        console.log(char);
-        switch(char){
-            case '#':
-                if(current_state == 'read_content'){
+        // console.log("befor : " + current_state);
+        console.log(i + ':    '+  char);
+        switch(true){
+            case (char == '#'):
+                if(current_state == 'read_content' || 'end_label'){
                     current_state = 'start_label';
+                    var current_label = new label();
                     current_label.content_array.push(char);
                     current_label.start = i;
                 } 
                 break;
-            case '(':
+            case (char == '('):
                 if(current_state == 'read_label'){
                     end_label(i);
                 }
                 break;
-            case '\s':
-                if(current_state == 'read_label'){
-                   end_label(i);
-                }else if(current_state == 'start_label'){
-                    current_state = 'read_content';
-                }
-                break;
-            case '\n':
-                if(current_state == 'read_label'){
-                   end_label(i);
-                } else if(current_state == 'start_label'){
-                    current_state = 'read_content';
-                }
-                break;
-            case '\r\n':
+            case (/(\s|\t|\n|\r\n|\f)/.test(char)):
                 if(current_state == 'read_label'){
                     end_label(i);
-                } else if(current_state == 'start_label'){
+                }else if(current_state == 'start_label' || 'end_label'){
                     current_state = 'read_content';
                 }
                 break;
@@ -89,50 +69,36 @@ module.exports = function(content){
                 }
                 break;
         }
-        console.log("after : " + current_state);
-
+        // console.log("after : " + current_state);
     }
 
     return res;
-}
 
-function push(label){
-    if(inArray(label.content_str, none_end_lables)){
-        return;
-    } else if(label.content_str == END_LABEL){
-        var before_label = stack.shift();
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-        console.log(stack);
-        console.log(before_label);
-        var r = {};
-        r.start_label = before_label.content_str;
-        r.end_label = END_LABEL;
-        r.start_index = before_label.start;
-        r.content_start_index = before_label.end + 1;
-        r.content_end_index = label.start - 1;
-        r.end_index = label.end;
-        res.push(r);
-    } else {
-        console.log('&&&&&');
-        stack.unshift(label);
-        console.log(stack);
+    function push_stack(){
+        if(inArray(current_label.content_str, none_end_lables)){
+            return;
+        } else if(current_label.content_str == END_LABEL){
+            var before_label = stack.shift();
+            var r = {};
+            r.start_label = before_label.content_str;
+            r.end_label = END_LABEL;
+            r.start_index = before_label.start;
+            r.content_start_index = before_label.end + 1;
+            r.content_end_index = current_label.start - 1;
+            r.end_index = current_label.start;
+            res.push(r);
+        } else {
+            stack.unshift(current_label);
+        }
+        delete current_label;
     }
-    console.log(stack);
-}
 
-function end_label(index){
-    current_state = 'end_label';
-    current_label.end = index - 1;
-    current_label.content_str = current_label.content_array.join('');
-    push(current_label);
-    revert_current_label();
-}
-
-function revert_current_label(){
-    current_label.content_array = [];
-    current_label.content_str = '';
-    current_label.start = null;
-    current_label.end = null;
+    function end_label(index){
+        current_state = 'end_label';
+        current_label.end = index - 1;
+        current_label.content_str = current_label.content_array.join('');
+        push_stack();
+    }
 }
 
 function isStackEmpty(s){
