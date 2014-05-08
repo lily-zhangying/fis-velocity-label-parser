@@ -5,6 +5,6 @@ var parser = require('../../index.js'),
 var ROOT = __dirname + '/file';
 fis.project.setProjectRoot(__dirname + '/file');
 
-var f = fis.file(ROOT + '/index.vm');
+var f = fis.file(ROOT + '/easy.vm');
 var res = parser(f.getContent());
 console.log(res);
