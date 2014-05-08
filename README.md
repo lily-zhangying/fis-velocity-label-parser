@@ -10,7 +10,7 @@ velocity中很多标签均对应#end结尾，正则无法匹配出对应标签�
 
 
 ### a.vm
-
+```html
 #html("home:static/lib/mod.js")
         #head
                 <meta charset="utf-8"/>
@@ -48,9 +48,10 @@ velocity中很多标签均对应#end结尾，正则无法匹配出对应标签�
         #end
 
 #end
-
+```
 
 ###解析后结果为：
+```bash
 [ { start_label: '#if',
     end_label: '#end',
     start_index: 104,
@@ -100,4 +101,4 @@ velocity中很多标签均对应#end结尾，正则无法匹配出对应标签�
     content_end_index: 1650,
     end_index: 1651 } ]
     
-    
+```  
