@@ -57,13 +57,10 @@ module.exports = function(content){
                 }
                 break;
             default:
-                if(current_state == 'read_label'){
+                if(current_state == 'read_label' || 'start_label'){
                     current_state = 'read_label';
                     current_label.content_array.push(char);
-                } else if(current_state == 'start_label'){
-                    current_state = 'read_label';
-                    current_label.content_array.push(char);
-                }else if(current_state == 'end_label'){
+                } else if(current_state == 'end_label'){
                     current_state = 'read_content';
                 }
                 break;
