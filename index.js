@@ -8,7 +8,7 @@ var label = function(){
     this.start = null;
     this.end = null;
     this.content_array = [];
-    this.content_str = [];
+    this.content_str = '';
 }
 
 module.exports = function(content){
