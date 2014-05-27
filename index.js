@@ -11,7 +11,7 @@ var label = function(){
     this.content_str = '';
 }
 
-module.exports = function(content){
+module.exports = function(content, options){
     var reg = /(\#\#[^\r\n\f]+|\#\*[\s\S]+?(?:\*\#|$))/ig;
     var current_state = 'read_content';
     var stack = [];
@@ -33,7 +33,7 @@ module.exports = function(content){
                 break;
             }
         }
-        // console.log("befor : " + current_state);
+        console.log("befor : " + current_state);
         console.log(i + ':    '+  char);
         switch(true){
             case (char == '#'):
@@ -57,7 +57,7 @@ module.exports = function(content){
                 }
                 break;
             default:
-                if(current_state == 'read_label' || 'start_label'){
+                if(current_state == 'read_label' || current_state == 'start_label'){
                     current_state = 'read_label';
                     current_label.content_array.push(char);
                 } else if(current_state == 'end_label'){
@@ -65,7 +65,7 @@ module.exports = function(content){
                 }
                 break;
         }
-        // console.log("after : " + current_state);
+        console.log("after : " + current_state);
     }
 
     return res;
