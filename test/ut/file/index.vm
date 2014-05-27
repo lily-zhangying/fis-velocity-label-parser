@@ -1,6 +1,5 @@
-
 #html("home:static/lib/mod.js")
-        #head
+        #head()
                 <meta charset="utf-8"/>
 
                 #if($info.imgs) 
@@ -11,7 +10,7 @@
                
         #end
 
-        #body
+        #body()
                 #require("home:static/index/index.css")
                 #widget("home:widget/A/A.tpl")
 
@@ -25,7 +24,7 @@
                     注释3
                 *#
                 
-                #script
+                #script()
                         require.async("home:static/ui/B/B.js");
                         __inline("./a.js");
                         require('a.js');
@@ -38,7 +37,7 @@
                          */
                 #end
 
-                #style
+                #style()
                         @import url('./a.css');
                         @import url('a.css?__inline');
                         /**

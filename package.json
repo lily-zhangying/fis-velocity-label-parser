@@ -1,6 +1,6 @@
 {
   "name": "fis-velocity-label-parser",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "fis,fis-velocity-label-parser",
   "main": "index.js",
   "directories": {

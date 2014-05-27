@@ -11,7 +11,9 @@ var label = function(){
     this.content_str = '';
 }
 
-module.exports = function(content, options){
+module.exports = function(content, conf){
+   //todo merge conf中配置的velocity中无end结尾的标签
+
     var reg = /(\#\#[^\r\n\f]+|\#\*[\s\S]+?(?:\*\#|$))/ig;
     var current_state = 'read_content';
     var stack = [];
@@ -33,8 +35,10 @@ module.exports = function(content, options){
                 break;
             }
         }
-        console.log("befor : " + current_state);
-        console.log(i + ':    '+  char);
+
+        // console.log("befor : " + current_state);
+        // console.log(i + ':    '+  char);
+
         switch(true){
             case (char == '#'):
                 if(current_state == 'read_content' || 'end_label'){
@@ -65,7 +69,7 @@ module.exports = function(content, options){
                 }
                 break;
         }
-        console.log("after : " + current_state);
+        // console.log("after : " + current_state);
     }
 
     return res;
