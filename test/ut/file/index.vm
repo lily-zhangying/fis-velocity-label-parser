@@ -55,6 +55,8 @@
                     <a href="/bbsdoc.ejf?easyJWebCommand=show&&cid=$!info.cid" target="_blank">$!info.title</a><br> 
                 #end 
 
+                #uri("home:static/css/bootstrap.css")
+
         #end
 
 #end
