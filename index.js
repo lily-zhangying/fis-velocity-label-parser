@@ -1,5 +1,3 @@
-var fis = require('fis');
-
 var none_end_lables = ['#else', '#set', '#elseif', '#stop', '#include', '#parse', '#require', '#widget', '#uri'];
 
 var END_LABEL = '#end';
