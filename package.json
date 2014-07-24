@@ -1,6 +1,6 @@
 {
   "name": "fis-velocity-label-parser",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "fis,fis-velocity-label-parser",
   "main": "index.js",
   "directories": {
@@ -20,7 +20,7 @@
    "devDependencies": {
     "chai": "*",
     "mocha": "*",
-    "fis":"*"
+    "fis-kernel":"*"
   },
   "author": "lily-zhangying",
   "license": "MIT",
