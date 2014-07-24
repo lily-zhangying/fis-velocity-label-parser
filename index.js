@@ -17,9 +17,9 @@ module.exports = function(content, conf){
     var stack = [];
     var res = [];
     var comment_array = [];
-    var result = reg.exec(content);
+    var result;
     
-    while(result !== null){
+    while((result = reg.exec(content)) !== null){
         var r = [];
         r.start = result.index;
         r.end = result.index + result[0].length - 1;
