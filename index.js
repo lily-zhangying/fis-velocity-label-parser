@@ -1,4 +1,4 @@
-var none_end_lables = ['#else', '#set', '#elseif', '#stop', '#include', '#parse', '#require', '#widget', '#uri'];
+var has_end_labels = ["#if", "#foreach", "#macro", "#define", "#@","#html", "#body", "#head", "#block", "#extends", "#script", "#style"];
 
 var END_LABEL = '#end';
 
@@ -74,9 +74,7 @@ module.exports = function(content, conf){
     return res;
 
     function push_stack(){
-        if(inArray(current_label.content_str, none_end_lables)){
-            return;
-        } else if(current_label.content_str == END_LABEL){
+        if(current_label.content_str == END_LABEL){
             var before_label = stack.shift();
             var r = {};
             r.start_label = before_label.content_str;
@@ -86,7 +84,7 @@ module.exports = function(content, conf){
             r.content_end_index = current_label.start - 1;
             r.end_index = current_label.start;
             res.push(r);
-        } else {
+        }else if(inArray(current_label.content_str, has_end_labels)){
             stack.unshift(current_label);
         }
         delete current_label;
