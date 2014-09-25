@@ -18,7 +18,8 @@ module.exports = function(content, conf){
     var res = [];
     var comment_array = [];
     var result;
-    
+    content = content + '\n';
+
     while((result = reg.exec(content)) !== null){
         var r = [];
         r.start = result.index;
