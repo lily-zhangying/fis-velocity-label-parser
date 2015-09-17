@@ -11,7 +11,12 @@ var label = function(){
 
 module.exports = function(content, conf){
    //todo merge conf中配置的velocity中无end结尾的标签
-
+    var blocks = has_end_labels.concat();
+    
+    if (conf.blocks) {
+        blocks = blocks.concat(conf.blocks);
+    }
+    
     var reg = /(\#\#[^\r\n\f]+|\#\*[\s\S]+?(?:\*\#|$))/ig;
     var current_state = 'read_content';
     var stack = [];
@@ -85,7 +90,7 @@ module.exports = function(content, conf){
             r.content_end_index = current_label.start - 1;
             r.end_index = current_label.start;
             res.push(r);
-        }else if(inArray(current_label.content_str, has_end_labels)){
+        }else if(inArray(current_label.content_str, blocks)){
             stack.unshift(current_label);
         }
         delete current_label;
